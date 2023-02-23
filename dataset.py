@@ -7,6 +7,7 @@ from pycocotools.coco import COCO
 import matplotlib.pyplot as plt
 import os
 import pycocotools
+import torchvision
 
 class BurnedCAD_is(Dataset):
     def __init__(self, root, annFile, mode = 'train', transform = None):
@@ -109,6 +110,7 @@ class BurnedCAD_is(Dataset):
                 iscrowd = torch.zeros((len(bboxes),), dtype=torch.int64)
                 labels = torch.tensor(transformed["class_labels"],dtype=torch.int64)
                 
+                bboxes = torchvision.ops.box_convert(bboxes,in_fmt='xywh',out_fmt='xyxy') # to voc style
 
                 y = {
                     'boxes' : bboxes,

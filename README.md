@@ -5,10 +5,14 @@
 Burned Connector Anomaly Detection Dataset  
 
 v1: Burned connectors through the process at the factory.  
-v2: Burned connector samples manually with a lighter.
+v2: Burned connector samples manually with a lighter.  
+v3: added markable abnormal connectors having burned surface (lighter) 
    
 Available Tasks: object detection, instance segmentation   
 Format: [COCO](https://cocodataset.org/#home) format
+
+## data info 
+(TBU)
 
 ## USAGE
 
