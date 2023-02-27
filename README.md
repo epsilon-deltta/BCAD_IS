@@ -2,12 +2,10 @@
 
 ## dataset
 
+<span style="color: red"> __To be published soon__ </span> ⏳
+
 Burned Connector Anomaly Detection Dataset  
 
-v1: Burned connectors through the process at the factory.  
-v2: Burned connector samples manually with a lighter.  
-v3: added markable abnormal connectors having burned surface (lighter) 
-   
 Available Tasks: object detection, instance segmentation   
 Format: [COCO](https://cocodataset.org/#home) format
 
@@ -16,22 +14,32 @@ Format: [COCO](https://cocodataset.org/#home) format
 
 ## USAGE
 
+(TBU) 
 ```bash
-git clone https://github.com/epsilon-deltta/burnedCAD.git
-cd burnedCAD
 ```
 
-## files overall structure
+## Experimental results 
 
-```
-├── annotations  
-│   └── *.json  
-├── images  
-│   ├── *.png  
-│   ├── *.jpg  
-├── dataset.ipynb   
-├── dataset.py  
-```
+|<b>Mask RCNN (0~200 epoch)</b> |
+| :--: |
+| ![](./assets/mrcnn_200.png)|
+|<b>last epoch value</b> |
+| ![](./assets/mrcnn_200_table.png)|
+
+
+|<b>Mask RCNN (200~400 epoch)</b> |
+| :--: |
+| ![](./assets/mrcnn_400.png)|
+|<b>last epoch value</b> |
+| ![](./assets/mrcnn_400_table.png)|
+
+
+|<b>Mask RCNN (200~400 epoch)</b> |
+| :--: |
+| ![](./assets/mrcnn_800.png)|
+|<b>last epoch value</b> |
+| ![](./assets/mrcnn_800_table.png)|
+
 
 ## sample preview
 
@@ -42,9 +50,19 @@ from v2 dataset
 ![](./images/d_v2_2.jpg)  
 
 
+---
 
 ## Acknowledge
 
 in [MSIS Lab](https://www.cbnu.msislab.com/).
 
 ![](./assets/msis_logo.png)
+
+## Contact 
+
+person in charge: epsilon ahn<sup>1</sup>  
+email: ypahn@chungbuk.ac.kr   
+<sup>1</sup>: Department of Computer Science, Chungbuk National University, Cheongju 28644, South Korea  
+
+
+
