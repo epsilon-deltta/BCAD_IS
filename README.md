@@ -20,6 +20,11 @@ Format: [COCO](https://cocodataset.org/#home) format
 
 ## Experimental results 
 
+|Model type   | Desc  |
+|---|---|
+|mrcnn_{num}   | ...  |
+|mrcnn_cp_{num}   | Mask RCNN w/ Copy-paste aug. that starts from mrcnn_800.pth  |
+
 |<b>Mask RCNN (0~200 epoch)</b> |
 | :--: |
 | ![](./assets/mrcnn_200.png)|
