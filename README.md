@@ -24,6 +24,7 @@ Format: [COCO](https://cocodataset.org/#home) format
 |---|---|
 |mrcnn_{num}   | ...  |
 |mrcnn_cp_{num}   | Mask RCNN w/ Copy-paste aug. that starts from mrcnn_800.pth  |
+|mrcnn_cp_v4_400 | Mask RCNN w/ Copy-paste aug. that starts from mrcnn_cp_400.pth  |
 
 |<b>Mask RCNN (0~200 epoch)</b> |
 | :--: |
@@ -54,7 +55,9 @@ from v2 dataset
 ![](./images/b_v2_2.png)  
 ![](./images/d_v2_2.jpg)  
 
+## model weights
 
+saved path: /volume1/NFS/epsilon/model_weights/bcad (in MSIS LAB NAS)
 ---
 
 ## Acknowledge

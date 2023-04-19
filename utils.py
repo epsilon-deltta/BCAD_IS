@@ -344,3 +344,88 @@ def draw_segmentation_map(image, masks, boxes, labels):
                     thickness=2, lineType=cv2.LINE_AA)
     
     return image
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+import argparse
+import importlib
+import torch
+import utils
+
+import os
+import sys
+
+import torchvision
+from PIL import Image, ImageDraw, ImageFont
+import numpy as np
+
+def draw_ann(img,scores,boxes,masks=None,nms=True,iou_threshold=0.5,conf_threshold=0.4 ,mask_threshold=0.5): # pil , tensor,tensor,float
+
+    dis_rgbs = [(230, 25, 75), (60, 180, 75), (255, 225, 25), (0, 130, 200), (245, 130, 48), (145, 30, 180), (70, 240, 240), (240, 50, 230), (210, 245, 60), (250, 190, 212), (0, 128, 128),
+        (220, 190, 255), (170, 110, 40), (255, 250, 200), (128, 0, 0), (170, 255, 195), (128, 128, 0), (255, 215, 180), (0, 0, 128), (128, 128, 128), (255, 255, 255), (0, 0, 0)]
+    msk  = masks is not None
+    size = img.size[::-1]
+
+    # nms
+    if nms :
+        idx = torchvision.ops.nms(boxes,scores,iou_threshold=0.3)
+        boxes  = boxes[idx]
+        scores = scores[idx]
+        if msk :
+            masks = masks[idx]
+    if conf_threshold :
+        condition = scores>conf_threshold
+        boxes  = boxes[condition]
+        scores = scores[condition]   
+        if msk :
+            masks = masks[condition]
+    if msk :
+        if  'cuda' in masks.device.type:
+            masks = masks.clone().detach().cpu()
+        summask = np.zeros(size+(3,),dtype='uint8')
+        for i,mask in enumerate(masks): 
+            condi      = np.array(mask>0.5)
+            condi_3    = np.concatenate([condi.reshape(size+(1,) )]*3,axis=2)
+            colorMask  = np.array(Image.new('RGB',(size[1],size[0]),dis_rgbs[i]) )
+            colorMask  = colorMask * condi_3 
+
+            # multiply 1/2 if overlapped        
+#             overlapped = (colorMask.sum(0) * summask.sum(0)).astype('bool')
+#             overlapped = np.stack([overlapped,overlapped,overlapped]).reshape( num_condi.shape+(3,))
+#             overMask   = colorMask*overlapped//2 + summask*overlapped//2
+#             summask    = summask*(~overlapped) + colorMask*(~overlapped)
+#             summask    = summask + overMask
+            summask    = summask + (colorMask)
+        # summask brightness
+#         overlapped = 
+#         imgnp , summask = np.array(img)[overlapped]//2 + summask[overlapped]//2
+        imgnp           = np.array(img)
+        img = Image.fromarray(imgnp+summask ) 
+    
+    annimg = img.copy()
+    draw = ImageDraw.Draw(annimg)
+    font = ImageFont.load_default()
+    
+    for i,box in enumerate(boxes):
+        # draw.rectangle(xy=[0,0,150,150],outline=dis_rgb[2] )#, outline=label_color_map[det_labels[i]])
+        box_xy = box.tolist()
+        draw.rectangle(xy=box_xy,outline=dis_rgbs[i%len(dis_rgbs)] )#, outline=label_color_map[det_labels[i]])
+        title = str(round(scores[i].item(),4))
+        draw.text(xy=[box_xy[0]+len(title),box_xy[1]-1],text=title,fill='white',font=font)
+    del draw
+        
+    
+    return annimg
