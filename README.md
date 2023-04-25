@@ -1,4 +1,10 @@
 
+## Note 
+
+- main_mrcnn (mrcnn)
+- main_alb (mrcnn with cp)
+    - evaluator error: IndexError: list index out of range  
+evaluator results are not saved
 
 ## dataset
 
